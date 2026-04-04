@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện Tập Phân Số Lớp 4</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1>Luyện Tập Phân Số Lớp 4</h1>
+            <p>Hệ thống tự động sinh đề theo chuẩn SGK</p>
+        </header>
+
+        <div class="score-board">
+            <div>Số câu đúng: <span id="scoreCorrect" class="score-correct">0</span></div>
+            <div>Số câu sai: <span id="scoreWrong" class="score-wrong">0</span></div>
+        </div>
+
+        <section class="config-panel">
+            <div class="config-group">
+                <label for="mathType">Dạng toán:</label>
+                <select id="mathType">
+                    <option value="add_sub">Cộng & Trừ</option>
+                    <option value="mul_div">Nhân & Chia</option>
+                    <option value="mixed">Hỗn hợp 4 phép tính</option>
+                </select>
+            </div>
+
+            <div class="config-group">
+                <label for="fractionCount">Số lượng phân số:</label>
+                <input type="number" id="fractionCount" min="2" max="5" value="2">
+            </div>
+
+            <div class="config-group">
+                <label for="maxNumber">Độ khó (Giới hạn số):</label>
+                <select id="maxNumber">
+                    <option value="15">Cơ bản (Max 15)</option>
+                    <option value="50">Trung bình (Max 50)</option>
+                    <option value="100">Khó (Max 100)</option>
+                    <option value="1000">Thử thách (Max 1000)</option>
+                </select>
+            </div>
+
+            <button id="btnGenerate" class="btn btn-primary">Tạo Đề Bài Mới</button>
+        </section>
+
+        <section class="play-area">
+            
+            <div id="expressionContainer" class="expression-container">
+                </div>
+
+            <div class="answer-area">
+                <div class="answer-fraction">
+                    <input type="number" id="inputNumerator" placeholder="Tử số" autocomplete="off">
+                    <div class="fraction-line"></div>
+                    <input type="number" id="inputDenominator" placeholder="Mẫu số" autocomplete="off">
+                </div>
+                <button id="btnCheck" class="btn btn-success">Kiểm tra</button>
+            </div>
+
+        </section>
+
+        <div id="resultMessage" class="message"></div>
+        
+        <div id="correctAnswerContainer" class="correct-answer-box"></div>
+
+    </div>
+
+    <script src="js/modules/1_ConfigManager.js"></script>
+    <script src="js/modules/2_FractionMathEngine.js"></script>
+    <script src="js/modules/3_ExpressionGenerator.js"></script>
+    <script src="js/modules/4_Evaluator.js"></script>
+    
+    <script src="js/main.js"></script>
+
+</body>
+</html>
