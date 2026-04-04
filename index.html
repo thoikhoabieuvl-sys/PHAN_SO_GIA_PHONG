@@ -5,21 +5,303 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luyện Tập Phân Số Lớp 4</title>
     
-    <link rel="stylesheet" href="css/style.css">
+    <!-- ========================================== -->
+    <!-- PHẦN CSS: TRANG TRÍ GIAO DIỆN (Đã gộp vào) -->
+    <!-- ========================================== -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8ff; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .app-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 1200px; 
+            width: 95%; 
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 38px; 
+        }
+
+        header p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            font-size: 20px; 
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #bdc3c7;
+        }
+
+        .score-correct { color: #27ae60; }
+        .score-wrong { color: #c0392b; }
+
+        .config-panel {
+            background-color: #f8f9fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .config-group label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 18px; 
+            color: #34495e;
+        }
+
+        .config-group select,
+        .config-group input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 18px; 
+            width: 200px;
+            outline: none;
+        }
+
+        .config-group input:focus,
+        .config-group select:focus {
+            border-color: #3498db;
+        }
+
+        .play-area {
+            margin-bottom: 40px;
+        }
+
+        .expression-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap; 
+            overflow-x: auto; 
+            padding-bottom: 10px;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 50px; 
+            font-weight: bold;
+            min-height: 120px;
+        }
+
+        .fraction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .fraction .numerator {
+            padding: 0 15px;
+            border-bottom: 5px solid #2c3e50; 
+        }
+
+        .fraction .denominator {
+            padding: 0 15px;
+        }
+
+        .operator {
+            color: #e74c3c;
+            margin: 0 15px;
+        }
+
+        .answer-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .answer-fraction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 130px; 
+        }
+
+        .answer-fraction input {
+            width: 100%;
+            text-align: center;
+            font-size: 32px; 
+            padding: 15px;
+            border: 3px solid #bdc3c7;
+            border-radius: 10px;
+            font-weight: bold;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .answer-fraction input:focus {
+            border-color: #2ecc71;
+        }
+
+        .fraction-line {
+            width: 100%;
+            height: 6px; 
+            background-color: #2c3e50;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 20px; 
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.3s;
+            color: white;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            margin-top: 32px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            font-size: 22px;
+            padding: 20px 40px;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .message {
+            min-height: 24px;
+            font-size: 24px; 
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .message[class*="msg-"] {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .msg-correct { background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .msg-wrong { background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        .msg-warning { background-color: #fff3cd; color: #856404; border: 2px solid #ffeeba; }
+        .msg-empty, .msg-error { background-color: #e2e3e5; color: #383d41; border: 2px solid #d6d8db; }
+
+        .correct-answer-box {
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f4f8; 
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .correct-answer-box.show {
+            display: flex;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .correct-answer-box .fraction {
+            font-size: 34px;
+            margin: 0;
+        }
+        .correct-answer-box .fraction .numerator {
+            border-bottom: 4px solid #2c3e50;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 800px) {
+            .config-group select, .config-group input { width: 100%; }
+            .config-panel { flex-direction: column; align-items: stretch; }
+            .btn-primary { margin-top: 10px; }
+            .score-board { flex-direction: column; gap: 10px; }
+            .correct-answer-box { flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
     <div class="app-container">
+        <!-- TIÊU ĐỀ -->
         <header>
             <h1>Luyện Tập Phân Số Lớp 4</h1>
             <p>Hệ thống tự động sinh đề theo chuẩn SGK</p>
         </header>
 
+        <!-- BẢNG ĐIỂM -->
         <div class="score-board">
             <div>Số câu đúng: <span id="scoreCorrect" class="score-correct">0</span></div>
             <div>Số câu sai: <span id="scoreWrong" class="score-wrong">0</span></div>
         </div>
 
+        <!-- KHU VỰC CẤU HÌNH -->
         <section class="config-panel">
             <div class="config-group">
                 <label for="mathType">Dạng toán:</label>
@@ -48,10 +330,11 @@
             <button id="btnGenerate" class="btn btn-primary">Tạo Đề Bài Mới</button>
         </section>
 
+        <!-- KHU VỰC LÀM BÀI -->
         <section class="play-area">
-            
             <div id="expressionContainer" class="expression-container">
-                </div>
+                <!-- Javascript sẽ tự động vẽ các phân số vào đây -->
+            </div>
 
             <div class="answer-area">
                 <div class="answer-fraction">
@@ -61,21 +344,484 @@
                 </div>
                 <button id="btnCheck" class="btn btn-success">Kiểm tra</button>
             </div>
-
         </section>
 
+        <!-- THÔNG BÁO VÀ HƯỚNG DẪN GIẢI -->
         <div id="resultMessage" class="message"></div>
-        
         <div id="correctAnswerContainer" class="correct-answer-box"></div>
 
     </div>
 
-    <script src="js/modules/1_ConfigManager.js"></script>
-    <script src="js/modules/2_FractionMathEngine.js"></script>
-    <script src="js/modules/3_ExpressionGenerator.js"></script>
-    <script src="js/modules/4_Evaluator.js"></script>
-    
-    <script src="js/main.js"></script>
+    <!-- ========================================== -->
+    <!-- PHẦN JAVASCRIPT LÕI VÀ ĐIỀU KHIỂN (Đã gộp) -->
+    <!-- ========================================== -->
+    <script>
+        // --- 1. MODULE: QUẢN LÝ CẤU HÌNH ---
+        const ConfigManager = {
+            getConfig: function() {
+                const mathTypeEl = document.getElementById('mathType');
+                const fractionCountEl = document.getElementById('fractionCount');
+                const maxNumberEl = document.getElementById('maxNumber');
 
+                const config = {
+                    mathType: mathTypeEl ? mathTypeEl.value : 'add_sub',
+                    fractionCount: fractionCountEl ? parseInt(fractionCountEl.value, 10) : 2,
+                    maxNumber: maxNumberEl ? parseInt(maxNumberEl.value, 10) : 15
+                };
+
+                if (isNaN(config.fractionCount) || config.fractionCount < 2) config.fractionCount = 2;
+                if (config.fractionCount > 5) config.fractionCount = 5;
+                if (isNaN(config.maxNumber) || config.maxNumber < 2) config.maxNumber = 15;
+
+                return config;
+            }
+        };
+        window.ConfigManager = ConfigManager;
+
+        // --- 2. MODULE: LÕI TOÁN HỌC ---
+        const FractionMathEngine = {
+            gcd: function(a, b) {
+                a = Math.abs(a);
+                b = Math.abs(b);
+                while (b > 0) { let temp = b; b = a % b; a = temp; }
+                return a;
+            },
+            lcm: function(a, b) {
+                if (a === 0 || b === 0) return 0;
+                return Math.abs(a * b) / this.gcd(a, b);
+            },
+            simplify: function(numerator, denominator) {
+                if (denominator === 0) throw new Error("Lỗi: Mẫu số không thể bằng 0.");
+                let commonDivisor = this.gcd(numerator, denominator);
+                let n = numerator / commonDivisor;
+                let d = denominator / commonDivisor;
+                if (d < 0) { n = -n; d = -d; }
+                return { numerator: n, denominator: d };
+            },
+            add: function(f1, f2) {
+                let n = (f1.numerator * f2.denominator) + (f2.numerator * f1.denominator);
+                let d = f1.denominator * f2.denominator;
+                return this.simplify(n, d);
+            },
+            subtract: function(f1, f2) {
+                let n = (f1.numerator * f2.denominator) - (f2.numerator * f1.denominator);
+                let d = f1.denominator * f2.denominator;
+                return this.simplify(n, d);
+            },
+            multiply: function(f1, f2) {
+                let n = f1.numerator * f2.numerator;
+                let d = f1.denominator * f2.denominator;
+                return this.simplify(n, d);
+            },
+            divide: function(f1, f2) {
+                if (f2.numerator === 0) throw new Error("Lỗi: Không thể chia cho 0.");
+                let n = f1.numerator * f2.denominator;
+                let d = f1.denominator * f2.numerator;
+                return this.simplify(n, d);
+            },
+            isEqual: function(f1, f2) {
+                return (f1.numerator * f2.denominator) === (f2.numerator * f1.denominator);
+            },
+            isSimplified: function(numerator, denominator) {
+                if (denominator === 0) return false;
+                return this.gcd(numerator, denominator) === 1;
+            }
+        };
+        window.FractionMathEngine = FractionMathEngine;
+
+        // --- 3. MODULE: SINH ĐỀ BÀI ---
+        const ExpressionGenerator = {
+            getRandomInt: function(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            },
+            generateRandomFraction: function(maxNumber) {
+                let n = this.getRandomInt(1, maxNumber);
+                let d = this.getRandomInt(1, maxNumber);
+                if (d === 1) d = this.getRandomInt(2, maxNumber);
+                return { numerator: n, denominator: d };
+            },
+            getRandomOperator: function(mathType) {
+                let ops = [];
+                if (mathType === 'add_sub') ops = ['+', '-'];
+                else if (mathType === 'mul_div') ops = ['*', '/'];
+                else ops = ['+', '-', '*', '/']; 
+                return ops[this.getRandomInt(0, ops.length - 1)];
+            },
+            evaluateExpression: function(fractions, operators) {
+                const engine = window.FractionMathEngine;
+                let fracs = JSON.parse(JSON.stringify(fractions));
+                let ops = [...operators];
+
+                for (let i = 0; i < ops.length; i++) {
+                    if (ops[i] === '*' || ops[i] === '/') {
+                        let result = ops[i] === '*' ? engine.multiply(fracs[i], fracs[i + 1]) : engine.divide(fracs[i], fracs[i + 1]);
+                        fracs.splice(i, 2, result);
+                        ops.splice(i, 1);
+                        i--; 
+                    }
+                }
+                let finalResult = fracs[0];
+                for (let i = 0; i < ops.length; i++) {
+                    if (ops[i] === '+') finalResult = engine.add(finalResult, fracs[i + 1]);
+                    else if (ops[i] === '-') finalResult = engine.subtract(finalResult, fracs[i + 1]);
+                }
+                if (finalResult.numerator < 0 || finalResult.denominator < 0) {
+                    throw new Error("Kết quả bị âm");
+                }
+                return finalResult; 
+            },
+            generate: function(config) {
+                const maxRetries = 100; 
+                let attempts = 0;
+                while (attempts < maxRetries) {
+                    attempts++;
+                    try {
+                        let fractions = [];
+                        let operators = [];
+                        for (let i = 0; i < config.fractionCount; i++) {
+                            fractions.push(this.generateRandomFraction(config.maxNumber));
+                            if (i < config.fractionCount - 1) {
+                                operators.push(this.getRandomOperator(config.mathType));
+                            }
+                        }
+                        let correctAnswer = this.evaluateExpression(fractions, operators);
+                        return { fractions: fractions, operators: operators, correctAnswer: correctAnswer };
+                    } catch (error) { continue; }
+                }
+                console.error("Không thể tạo biểu thức hợp lệ sau 100 lần thử.");
+                return null;
+            }
+        };
+        window.ExpressionGenerator = ExpressionGenerator;
+
+        // --- 4. MODULE: CHẤM ĐIỂM SƯ PHẠM ---
+        const Evaluator = {
+            evaluate: function(userNumStr, userDenomStr, correctAnswer) {
+                let numInput = userNumStr ? userNumStr.trim() : '';
+                let denInput = userDenomStr ? userDenomStr.trim() : '';
+
+                if (numInput === '' && denInput === '') {
+                    return { status: 'empty', message: 'Con hãy nhập kết quả vào nhé!' };
+                }
+
+                let num = parseInt(numInput, 10);
+                let den = parseInt(denInput, 10);
+
+                if (isNaN(num)) return { status: 'error', message: 'Tử số phải là một số hợp lệ.' };
+
+                if (isNaN(den) && denInput === '') den = 1; 
+                else if (isNaN(den) || den === 0) return { status: 'error', message: 'Mẫu số phải là số khác 0.' };
+
+                const userFraction = { numerator: num, denominator: den };
+                const engine = window.FractionMathEngine;
+                const isMathCorrect = engine.isEqual(userFraction, correctAnswer);
+
+                if (isMathCorrect) {
+                    if (userFraction.numerator === correctAnswer.numerator && userFraction.denominator === correctAnswer.denominator) {
+                        if (correctAnswer.denominator === 1 && denInput === '') {
+                            return { status: 'correct', message: 'Tuyệt vời! Kết quả là một số nguyên.' };
+                        }
+                        return { status: 'correct', message: 'Tuyệt vời! Con đã tính đúng và rút gọn chính xác.' };
+                    } else {
+                        return { status: 'warning', message: 'Con tính ra kết quả đúng rồi đấy, nhưng phân số này chưa tối giản. Con hãy rút gọn thêm một bước nữa nhé!' };
+                    }
+                } else {
+                    return { status: 'wrong', message: 'Kết quả chưa chính xác. Con hãy tính lại cẩn thận nhé!' };
+                }
+            }
+        };
+        window.Evaluator = Evaluator;
+
+        // --- 5. NHẠC TRƯỞNG QUẢN LÝ APP (Cập nhật bôi đỏ bước giải) ---
+        const App = {
+            currentProblem: null,
+            currentCorrectAnswer: null,
+            score: { correct: 0, wrong: 0 },
+            hasScoredCurrentProblem: false, 
+
+            init: function() {
+                const btnGenerate = document.getElementById('btnGenerate');
+                const btnCheck = document.getElementById('btnCheck');
+                if (btnGenerate) btnGenerate.addEventListener('click', () => this.generateProblem());
+                if (btnCheck) btnCheck.addEventListener('click', () => this.checkAnswer());
+                this.generateProblem();
+            },
+
+            generateProblem: function() {
+                const config = window.ConfigManager.getConfig();
+                const problem = window.ExpressionGenerator.generate(config);
+                
+                if (!problem) {
+                    this.showMessage("Không thể tạo đề với cấu hình này, vui lòng nới lỏng giới hạn số!", "error");
+                    return;
+                }
+
+                this.currentProblem = problem;
+                this.currentCorrectAnswer = problem.correctAnswer;
+                this.hasScoredCurrentProblem = false; 
+
+                this.renderExpression(problem.fractions, problem.operators);
+                
+                const numInput = document.getElementById('inputNumerator');
+                const denInput = document.getElementById('inputDenominator');
+                if (numInput) numInput.value = '';
+                if (denInput) denInput.value = '';
+                
+                this.showMessage("", "clear");
+                this.hideCorrectAnswer(); 
+                if (numInput) numInput.focus();
+            },
+
+            renderExpression: function(fractions, operators) {
+                const container = document.getElementById('expressionContainer');
+                if (!container) return;
+
+                let html = '';
+                for (let i = 0; i < fractions.length; i++) {
+                    html += `
+                        <div class="fraction">
+                            <span class="numerator">${fractions[i].numerator}</span>
+                            <span class="denominator">${fractions[i].denominator}</span>
+                        </div>
+                    `;
+                    if (i < operators.length) {
+                        let opSymbol = operators[i];
+                        if (opSymbol === '*') opSymbol = '×';
+                        if (opSymbol === '/') opSymbol = ':';
+                        html += `<div class="operator">${opSymbol}</div>`;
+                    }
+                }
+                html += `<div class="operator">=</div>`;
+                container.innerHTML = html;
+            },
+
+            checkAnswer: function() {
+                if (!this.currentCorrectAnswer) return;
+
+                const numInputStr = document.getElementById('inputNumerator').value;
+                const denInputStr = document.getElementById('inputDenominator').value;
+                const result = window.Evaluator.evaluate(numInputStr, denInputStr, this.currentCorrectAnswer);
+
+                if (!this.hasScoredCurrentProblem) {
+                    if (result.status === 'correct') {
+                        this.score.correct++;
+                        this.updateScoreBoard();
+                        this.hasScoredCurrentProblem = true; 
+                    } 
+                    else if (result.status === 'wrong') {
+                        this.score.wrong++;
+                        this.updateScoreBoard();
+                        this.hasScoredCurrentProblem = true; 
+                    }
+                }
+
+                this.showMessage(result.message, result.status);
+
+                if (result.status === 'correct' || result.status === 'wrong') {
+                    this.showCorrectAnswer(this.currentCorrectAnswer);
+                } else {
+                    this.hideCorrectAnswer();
+                }
+            },
+
+            updateScoreBoard: function() {
+                const correctEl = document.getElementById('scoreCorrect');
+                const wrongEl = document.getElementById('scoreWrong');
+                if (correctEl) correctEl.textContent = this.score.correct;
+                if (wrongEl) wrongEl.textContent = this.score.wrong;
+            },
+
+            showMessage: function(msg, status) {
+                const msgEl = document.getElementById('resultMessage');
+                if (!msgEl) return;
+                msgEl.textContent = msg;
+                msgEl.className = 'message'; 
+                if (status !== 'clear') msgEl.classList.add(`msg-${status}`);
+            },
+
+            showCorrectAnswer: function(answer) {
+                const container = document.getElementById('correctAnswerContainer');
+                if (!container) return;
+
+                let fractionHtml = '';
+                if (answer.denominator === 1) {
+                    fractionHtml = `<span style="font-size: 38px; color: #e74c3c; margin-left: 10px;">${answer.numerator}</span>`;
+                } else {
+                    fractionHtml = `
+                        <div class="fraction">
+                            <span class="numerator" style="border-bottom-color: #e74c3c; color: #e74c3c;">${answer.numerator}</span>
+                            <span class="denominator" style="color: #e74c3c;">${answer.denominator}</span>
+                        </div>
+                    `;
+                }
+
+                let htmlContent = `
+                    <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                        <span>Đáp án chuẩn là: </span> ${fractionHtml}
+                        <button id="btnShowExplanation" style="margin-left: 20px; padding: 10px 15px; background-color: #f39c12; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s;">
+                            Xem các bước giải
+                        </button>
+                    </div>
+                    <div id="explanationBox" style="display: none; width: 100%; margin-top: 20px; padding: 30px; background-color: #ffffff; border: 2px dashed #f39c12; border-radius: 10px; text-align: left; overflow-x: auto;">
+                    </div>
+                `;
+
+                container.innerHTML = htmlContent;
+                container.style.flexDirection = 'column'; 
+                container.classList.add('show');
+
+                const btnExp = document.getElementById('btnShowExplanation');
+                if (btnExp) {
+                    btnExp.addEventListener('click', () => {
+                        const expBox = document.getElementById('explanationBox');
+                        if (expBox.style.display === 'none') {
+                            expBox.innerHTML = this.generateExplanationHTML();
+                            expBox.style.display = 'block';
+                            btnExp.textContent = "Ẩn các bước giải";
+                            btnExp.style.backgroundColor = "#7f8c8d";
+                        } else {
+                            expBox.style.display = 'none';
+                            btnExp.textContent = "Xem các bước giải";
+                            btnExp.style.backgroundColor = "#f39c12";
+                        }
+                    });
+                }
+            },
+
+            hideCorrectAnswer: function() {
+                const container = document.getElementById('correctAnswerContainer');
+                if (!container) return;
+                container.classList.remove('show');
+                container.innerHTML = '';
+            },
+
+            generateExplanationHTML: function() {
+                if (!this.currentProblem) return "";
+                
+                const fractions = this.currentProblem.fractions;
+                const operators = this.currentProblem.operators;
+                const engine = window.FractionMathEngine;
+                
+                const renderFracLine = (f, isRed) => {
+                    let color = isRed ? '#e74c3c' : '#2c3e50'; 
+                    if (f.denominator === 1) {
+                        return `<span style="font-weight: bold; font-size: 1.2em; vertical-align: middle; margin: 0 10px; color: ${color};">${f.numerator}</span>`;
+                    }
+                    return `<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 10px; line-height: 1.2;">
+                                <span style="border-bottom: 3px solid ${color}; padding: 0 5px; color: ${color}; font-weight: bold;">${f.numerator}</span>
+                                <span style="padding: 0 5px; color: ${color}; font-weight: bold;">${f.denominator}</span>
+                            </div>`;
+                };
+
+                const renderOpLine = (op) => {
+                    let symbol = op;
+                    if (op === '*') symbol = '×';
+                    if (op === '/') symbol = ':';
+                    return `<span style="color: #2c3e50; font-weight: bold; font-size: 1.2em; margin: 0 10px; vertical-align: middle;">${symbol}</span>`;
+                };
+
+                const renderLine = (fracs, ops, highlightIndices, showEquals) => {
+                    let res = `<div style="display: flex; align-items: center; margin-bottom: 25px; font-size: 32px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">`;
+                    if (showEquals) {
+                        res += `<span style="margin-right: 20px; font-weight: bold; color: #2c3e50;">=</span>`;
+                    } else {
+                        res += `<span style="margin-right: 20px; font-weight: bold; color: transparent; user-select: none;">=</span>`;
+                    }
+
+                    for (let i = 0; i < fracs.length; i++) {
+                        let isRed = highlightIndices.includes(i);
+                        res += renderFracLine(fracs[i], isRed);
+                        if (i < ops.length) {
+                            res += renderOpLine(ops[i]);
+                        }
+                    }
+                    res += `</div>`;
+                    return res;
+                };
+
+                let html = `<div style="padding: 10px 20px;">`;
+
+                let currentFracs = JSON.parse(JSON.stringify(fractions));
+                let currentOps = [...operators];
+
+                html += renderLine(currentFracs, currentOps, [], false);
+
+                while (true) {
+                    let idx = currentOps.findIndex(op => op === '*' || op === '/');
+                    if (idx === -1) break;
+
+                    let f1 = currentFracs[idx];
+                    let f2 = currentFracs[idx + 1];
+                    let op = currentOps[idx];
+
+                    let unsimp;
+                    if (op === '*') {
+                        unsimp = { numerator: f1.numerator * f2.numerator, denominator: f1.denominator * f2.denominator };
+                    } else {
+                        unsimp = { numerator: f1.numerator * f2.denominator, denominator: f1.denominator * f2.numerator };
+                    }
+
+                    currentFracs.splice(idx, 2, unsimp);
+                    currentOps.splice(idx, 1);
+
+                    html += renderLine(currentFracs, currentOps, [idx], true);
+
+                    let simp = engine.simplify(unsimp.numerator, unsimp.denominator);
+                    if (simp.numerator !== unsimp.numerator || simp.denominator !== unsimp.denominator) {
+                        currentFracs[idx] = simp;
+                        html += renderLine(currentFracs, currentOps, [idx], true);
+                    }
+                }
+
+                while (true) {
+                    let idx = currentOps.findIndex(op => op === '+' || op === '-');
+                    if (idx === -1) break;
+
+                    let f1 = currentFracs[idx];
+                    let f2 = currentFracs[idx + 1];
+                    let op = currentOps[idx];
+
+                    if (f1.denominator !== f2.denominator) {
+                        let lcm = engine.lcm(f1.denominator, f2.denominator);
+                        let n1 = f1.numerator * (lcm / f1.denominator);
+                        let n2 = f2.numerator * (lcm / f2.denominator);
+
+                        let changedIndices = [];
+                        if (f1.denominator !== lcm) changedIndices.push(idx);
+                        if (f2.denominator !== lcm) changedIndices.push(idx + 1);
+
+                        currentFracs[idx] = { numerator: n1, denominator: lcm };
+                        currentFracs[idx + 1] = { numerator: n2, denominator: lcm };
+
+                        html += renderLine(currentFracs, currentOps, changedIndices, true);
+
+                        f1 = currentFracs[idx];
+                        f2 = currentFracs[idx + 1];
+                    }
+
+                    let resNum = op === '+' ? f1.numerator + f2.numerator : f1.numerator - f2.numerator;
+                    let unsimp = { numerator: resNum, denominator: f1.denominator };
+
+                    currentFracs.splice(idx, 2, unsimp);
+                    currentOps.splice(idx, 1);
+
+                    html += renderLine(currentFracs, currentOps, [idx], true);
+
+                    let simp = engine.simplify(unsimp.numerator, unsimp.denominator);
+                    if (simp.numerator !== unsimp.numerator || simp.denominator !== unsimp.denominator) {
+                        currentFracs[idx] = simp;
+                        html += renderLine(currentFracs, currentOps, [idx], true);
+                    }
+                }
+
+                html += `</div>`;
+                return html;
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
+    </script>
 </body>
 </html>
